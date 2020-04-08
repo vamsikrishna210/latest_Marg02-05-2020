@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="28354" started-at="2020-04-06T12:04:38Z" finished-at="2020-04-06T12:05:07Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="28354" started-at="2020-04-06T12:04:38Z" finished-at="2020-04-06T12:05:07Z">
+      <class name="Rough.Sale_Return_Challan">
+        <test-method status="PASS" signature="webLaunch()[pri:0, instance:Rough.Sale_Return_Challan@72967906]" name="webLaunch" is-config="true" duration-ms="19869" started-at="2020-04-06T12:04:19Z" finished-at="2020-04-06T12:04:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- webLaunch -->
+        <test-method status="PASS" signature="login()[pri:0, instance:Rough.Sale_Return_Challan@72967906]" name="login" is-config="true" duration-ms="491" started-at="2020-04-06T12:04:38Z" finished-at="2020-04-06T12:04:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="action()[pri:1, instance:Rough.Sale_Return_Challan@72967906]" name="action" duration-ms="16825" started-at="2020-04-06T12:04:39Z" finished-at="2020-04-06T12:04:56Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- action -->
+        <test-method status="PASS" signature="Date()[pri:2, instance:Rough.Sale_Return_Challan@72967906]" name="Date" duration-ms="4886" started-at="2020-04-06T12:04:56Z" finished-at="2020-04-06T12:05:01Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Date -->
+        <test-method status="PASS" signature="Askledger()[pri:3, instance:Rough.Sale_Return_Challan@72967906]" name="Askledger" duration-ms="6114" started-at="2020-04-06T12:05:01Z" finished-at="2020-04-06T12:05:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Askledger -->
+      </class> <!-- Rough.Sale_Return_Challan -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
