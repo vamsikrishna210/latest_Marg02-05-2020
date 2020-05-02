@@ -662,7 +662,7 @@ public class Credit_Note_New  {
     			if(DRAM.isDisplayed()){
         			DRAM.sendKeys(Keys.ENTER);
             		System.out.println("amount  Exists");
-            	}
+            	}   
             	else{
             		DRAM.sendKeys(Drmt);
         			DRAM.sendKeys(Keys.ENTER);

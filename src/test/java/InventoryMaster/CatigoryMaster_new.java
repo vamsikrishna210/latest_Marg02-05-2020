@@ -27,6 +27,7 @@ public class CatigoryMaster_new {
 	String pass = reader.getCellData("HSN", "password", 2);
 	String Companyname = reader.getCellData("HSN", "Company_name", 2);
 	String catname = reader.getCellData("HSN", "Cat_Name", 2);
+	String catname2 = reader.getCellData("HSN", "Cat_Name_re", 2);
 	
 
 	@BeforeSuite
@@ -86,8 +87,19 @@ public class CatigoryMaster_new {
 		driver.findElement(By.id("btn-New")).click();
 	}
 	@Test(priority = 5)
-	public void newcat(){
-		driver.findElement(By.id("txtCategoryName")).sendKeys(catname);
+	public void newcat() throws InterruptedException{
+		WebElement catnm = driver.findElement(By.id("txtCategoryName"));
+		catnm.sendKeys(catname);
+		catnm.sendKeys(Keys.ENTER);
+		Thread.sleep(3000);
+		WebElement e1 = driver.findElement(By.xpath("//span[contains(text(),'Category name already exists !')]"));
+		System.out.println(e1.getText());
+		
+		if(e1.getText().equals("Category name already exists !")){
+			catnm.clear();
+			catnm.sendKeys(catname2);
+			catnm.sendKeys(Keys.ENTER);
+		}
 		
 	}
 	@Test(priority = 6)

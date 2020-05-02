@@ -18,9 +18,38 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.margerp.qa.xls_Reader.Xls_Reader;
+
 public class Opening_Balance_Ledger {
 	WebDriver driver;
 	WebDriverWait Wait;
+	
+	public static Xls_Reader reader = new Xls_Reader(
+			"C:\\Users\\Vamsikrishna\\Desktop\\ddf.xlsx");
+	
+	String user	 		= reader.getCellData("Led_Bank_Mr", "User", 2);
+	String pass 		= reader.getCellData("Led_Bank_Mr", "password", 2);
+	String Companyname  = reader.getCellData("Led_Bank_Mr", "CompanyName", 2);
+	String OpenBal   	= reader.getCellData("Led_Bank_Mr", "Opening Balance", 2);
+	String DrCr 		= reader.getCellData("Led_Bank_Mr", "Debit/Credit", 2);
+	String ACCNo 		= reader.getCellData("Led_Bank_Mr", "Acc_Led", 2);
+	String Rtgs 		= reader.getCellData("Led_Bank_Mr", "RTGS_led", 2);
+	String Ifsc		    = reader.getCellData("Led_Bank_Mr", "IFSC_Code", 2);
+	String MIR 			= reader.getCellData("Led_Bank_Mr", "MIR_No", 2);
+	String ledgername   = reader.getCellData("Led_Bank_Mr", "ledger_name", 2);
+	String ledser	    = reader.getCellData("Led_Bank_Mr", "Led_Sel", 2);
+	String Amt 			= reader.getCellData("Led_Bank_Mr", "Amount_1", 2);
+	String Bill         = reader.getCellData("Led_Bank_Mr", "Bill_No", 2);
+	String dys  	    = reader.getCellData("Led_Bank_Mr", "Days_ob", 2);
+	String Bvalue 	    = reader.getCellData("Led_Bank_Mr", "Bill_Value", 2);
+	String CD         = reader.getCellData("Led_Bank_Mr", "CR_Dr", 2);
+	String Remarks  	    = reader.getCellData("Led_Bank_Mr", "Remarks", 2);
+	
+	
+	
+	
+	//			
+
 	@BeforeSuite
 	 public void webLaunch() {
 	    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
@@ -33,7 +62,7 @@ public class Opening_Balance_Ledger {
 	@BeforeTest
 	 public void login() {
 		 driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
-			driver.findElement(By.xpath("//*[@id='userid']")).sendKeys("admin");
+			driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
 			driver.findElement(By.xpath("//*[@id='password']")).sendKeys("1234");
 			driver.findElement(By.xpath("//*[@id='btnSave']")).click();
 
@@ -43,7 +72,7 @@ public class Opening_Balance_Ledger {
 	 public void action() throws InterruptedException{
 		 WebDriverWait wait = new WebDriverWait(driver, 20);
 			WebElement textbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='SearchBox']")));
-			textbox.sendKeys("vamsikrishna");
+			textbox.sendKeys(Companyname);
 			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
 			int count=allOptions.size();
 			System.out.println("No.of Autosuggesion "+count);
@@ -68,12 +97,74 @@ public class Opening_Balance_Ledger {
 			driver.findElement(By.linkText("Ledger")).click();
 	 }
 	@Test(priority=2)
-	public void serchledg(){
-		WebElement Serchbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
-		 Serchbox.sendKeys("vamsi Deb");
-		 
-		 driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			List<WebElement> allOptions= driver.findElements(By.xpath("//*[@class='textContent']"));
+	public void serchledg() throws InterruptedException{
+		Select led1 = new Select(driver.findElement(By.xpath("//*[@id='mrgSearchBox']")));
+    	led1.selectByVisibleText(ledser);
+    	
+    	if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[2]")).isSelected()){
+       	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+			//textbox.clear();
+		    Thread.sleep(2000);
+			textbox.sendKeys(ledgername);
+			Thread.sleep(2000);
+			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+			/*if(!driver.findElements(By.xpath("//p[contains(text(),'Not Found!')]")).isEmpty()){
+			String Actul =driver.findElement(By.xpath("//p[contains(text(),'Not Found!')]")).getText();
+			//String typedValue = textbox.getAttribute("value");
+			String ttt= textbox.getText().trim();
+			String exprt = ttt.concat(Actul).trim();
+			
+			System.out.println(Actul);
+			System.out.println("==================");
+			System.out.println(ttt);
+			System.out.println("----------------");
+			System.out.println(exprt);
+			System.out.println("-------------------");
+			
+			}
+			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+			int count=allOptions.size();
+			System.out.println("No.of Autosuggesion "+count);
+			System.out.println("List of Autosuggesion");
+			for(int i=0;i<count;i++){
+				String text = allOptions.get(i).getText();
+				System.out.println(text);	
+			}*/
+			//textbox.sendKeys(Keys.ARROW_DOWN);
+			textbox.sendKeys(Keys.ENTER);
+			System.out.println("ledger Serched by Name");
+			
+       }
+       // Code
+       else  if(driver.findElement(By.xpath("//option[contains(text(),'Code')]")).isSelected()){
+         	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+  			//textbox.clear();
+  		    Thread.sleep(2000);
+  			textbox.sendKeys(ledgername);
+  			Thread.sleep(2000);
+  			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+  			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+  			int count=allOptions.size();
+  			System.out.println("No.of Autosuggesion "+count);
+  			System.out.println("List of Autosuggesion");
+  			for(int i=0;i<count;i++){
+  				String text = allOptions.get(i).getText();
+  				System.out.println(text);	
+  			}
+  			//textbox.sendKeys(Keys.ARROW_DOWN);
+  			textbox.sendKeys(Keys.ENTER);
+  			System.out.println("ledger Serched by Mobile");
+  			
+      }
+       //Mobile
+       else  if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[3]")).isSelected()){
+      	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+			//textbox.clear();
+		    Thread.sleep(2000);
+			textbox.sendKeys(ledgername);
+			Thread.sleep(2000);
+			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
 			int count=allOptions.size();
 			System.out.println("No.of Autosuggesion "+count);
 			System.out.println("List of Autosuggesion");
@@ -82,17 +173,87 @@ public class Opening_Balance_Ledger {
 				System.out.println(text);	
 			}
 			//textbox.sendKeys(Keys.ARROW_DOWN);
-			Serchbox.sendKeys(Keys.ENTER);
-	 }
+			textbox.sendKeys(Keys.ENTER);
+			System.out.println("ledger Serched by Mobile");
+			
+   }
+     //DL No
+       else if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[4]")).isSelected()){
+      	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+			//textbox.clear();
+		    Thread.sleep(2000);
+			textbox.sendKeys(ledgername);
+			Thread.sleep(2000);
+			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+			int count=allOptions.size();
+			System.out.println("No.of Autosuggesion "+count);
+			System.out.println("List of Autosuggesion");
+			for(int i=0;i<count;i++){
+				String text = allOptions.get(i).getText();
+				System.out.println(text);	
+			}
+			//textbox.sendKeys(Keys.ARROW_DOWN);
+			textbox.sendKeys(Keys.ENTER);
+			System.out.println("ledger Serched by DL No.");
+			
+
+}
+    // Adress
+       else if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[5]")).isSelected()){
+      	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+			//textbox.clear();
+		    Thread.sleep(2000);
+			textbox.sendKeys(ledgername);
+			Thread.sleep(2000);
+			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+			int count=allOptions.size();
+			System.out.println("No.of Autosuggesion "+count);
+			System.out.println("List of Autosuggesion");
+			for(int i=0;i<count;i++){
+				String text = allOptions.get(i).getText();
+				System.out.println(text);	
+			}
+			//textbox.sendKeys(Keys.ARROW_DOWN);
+			textbox.sendKeys(Keys.ENTER);
+			System.out.println("ledger Serched by Address");
+			
+       }
+       // GSTIN
+       else if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[6]")).isSelected()){
+      	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+			//textbox.clear();
+		    Thread.sleep(2000);
+			textbox.sendKeys(ledgername);
+			Thread.sleep(2000);
+			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+			int count=allOptions.size();
+			System.out.println("No.of Autosuggesion "+count);
+			System.out.println("List of Autosuggesion");
+			for(int i=0;i<count;i++){
+				String text = allOptions.get(i).getText();
+				System.out.println(text);	
+			}
+			//textbox.sendKeys(Keys.ARROW_DOWN);
+			textbox.sendKeys(Keys.ENTER);
+			System.out.println("ledger Serched by GSTIN");
+   }
+		
+		
+		
+	}
+	 
 	@Test (priority=3)
 	public void Amount (){
 		WebElement amount = driver.findElement(By.xpath("//input[@id='txtAmount']"));
 		amount.sendKeys(Keys.BACK_SPACE);
-		amount.sendKeys("1000");
+		amount.sendKeys(Amt);
 		amount.sendKeys(Keys.ENTER);
 		
 		Select Dr = new Select (driver.findElement(By.xpath("//select[@id='drpCrDr']")));
-		Dr.selectByIndex(0);
+		Dr.selectByVisibleText(CD);
 		
 		WebElement Dr1 =  driver.findElement(By.xpath("//select[@id='drpCrDr']"));
 		Dr1.sendKeys(Keys.ENTER);
@@ -114,14 +275,14 @@ public class Opening_Balance_Ledger {
 		WebElement bill = driver.findElement(By.xpath("//input[@id='txt-BillNo-0']"));
 		bill.clear();
 		//bill.sendKeys(Keys.BACK_SPACE);
-		bill.sendKeys("ABC1001");
+		bill.sendKeys(Bill);
 		bill.sendKeys(Keys.ENTER);
 	}
 	@Test(priority=6)
 	public void Days() throws InterruptedException{
 		WebElement day = driver.findElement(By.xpath("//*[contains(@id,'txt-Days')]"));
 		day.clear();
-		day.sendKeys("1000");
+		day.sendKeys(dys);
 		String typedValue = day.getAttribute("value");
 	       int size = typedValue.length();
 	       
@@ -145,7 +306,7 @@ public class Opening_Balance_Ledger {
 		//Value.clear();
 		Value.sendKeys(Keys.BACK_SPACE);
 		
-		Value.sendKeys("5000");	
+		Value.sendKeys(Bvalue);	
 		Value.sendKeys(Keys.ENTER);		
 		
 		String typedValue = Value.getAttribute("value");
@@ -169,14 +330,14 @@ public class Opening_Balance_Ledger {
 	public void DRCR(){
 		WebElement Drcr = driver.findElement(By.xpath("//select[@id='drp-DebitOrCredit-0']"));
 		Select Drc = new Select (driver.findElement(By.xpath("//select[@id='drp-DebitOrCredit-0']")));
-		Drc.selectByVisibleText("Dr");
+		Drc.selectByVisibleText(DrCr);
 		Drcr.sendKeys(Keys.ENTER);
 	}
 	@Test(priority=9)
 	public void Remrak() throws InterruptedException{
 		WebElement Remark = driver.findElement(By.xpath("//input[@id='txt-Remark-0']"));
 		Remark.clear();
-		Remark.sendKeys("kfgjsklgfdklggkfdgfgkfdgfdgkfdgggfkdlgfkldgfkldgfkldgfldgldfgllgggfmgngc mnlcb");
+		Remark.sendKeys(Remarks);
 		
 		String typedValue = Remark.getAttribute("value");
 	       int size = typedValue.length();

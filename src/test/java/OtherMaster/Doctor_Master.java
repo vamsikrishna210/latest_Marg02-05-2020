@@ -72,9 +72,10 @@ public class Doctor_Master {
 	public void serchCompany() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		WebElement textbox = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By
-						.xpath("//input[@id='SearchBox']")));
+				.visibilityOfElementLocated(By.xpath("//input[@id='SearchBox']")));
+		Thread.sleep(3000);
 		textbox.sendKeys(Companyname);
+		Thread.sleep(5000);
 		List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
 		int count=allOptions.size();
 		System.out.println("No.of Autosuggesion "+count);
@@ -170,12 +171,15 @@ public class Doctor_Master {
 	public void Special() throws InterruptedException{
 		WebElement splization = driver.findElement(By.xpath("//input[@id='txtSpecialisationId']"));
 		splization.clear();
-		splization.sendKeys(Keys.SPACE);
+		//splization.sendKeys(Keys.SPACE);
+		splization.sendKeys(Splx);
 		Thread.sleep(2000);
-		WebElement SearchBoxSp = driver.findElement(By.xpath("//*[@id='SearchBox']"));
+		/*WebElement SearchBoxSp = driver.findElement(By.xpath("///input[@id='txtSpecialisationId']"));
+		
+		//WebElement SearchBoxSp = driver.findElement(By.xpath("//*[@id='SearchBox']"));
 		SearchBoxSp.clear();
 		SearchBoxSp.sendKeys(Splx);
-		
+		*/
 		List<WebElement> SPLI= driver.findElements(By.xpath("//*[contains(@id,'specializationGrid')]"));
 		int count2=SPLI.size();
 		System.out.println("No.of Autosuggesion "+count2);

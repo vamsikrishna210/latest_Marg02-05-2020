@@ -78,7 +78,9 @@ public class prescription_master {
 		WebElement textbox = wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By
 						.xpath("//input[@id='SearchBox']")));
+		Thread.sleep(3000);
 		textbox.sendKeys(Companyname);
+		Thread.sleep(3000);
 		List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
 		int count=allOptions.size();
 		System.out.println("No.of Autosuggesion "+count);

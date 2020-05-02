@@ -46,40 +46,52 @@ public class Patient_Master {
    	String Ptype       =    reader.getCellData("Pant", "Pant_Type_Drp", 2);
    	String Des         =	reader.getCellData("Pant", "Disease", 2);
  	String Pdisc       =	reader.getCellData("Pant", "Pant_Disc", 2);
-   	@BeforeSuite
-    public void webLaunch() {
-    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
-    	 driver = new ChromeDriver();
-    	driver.get("http://172.16.8.17/margwebsite/qa");
-    	driver.manage().window().maximize();
-    	driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-    	Wait= new WebDriverWait(driver,20);
+ 	@BeforeSuite
+	 public void webLaunch() {
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
+   	driver = new ChromeDriver();
+   	driver.get("http://172.16.8.17/margwebsite/qa");
+   	driver.manage().window().maximize();
+   	driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+   	Wait= new WebDriverWait(driver,20);
+   	driver.findElement(By.xpath("//a[@class='nav-link login']")).click();
 	}
 	@BeforeTest
-	public void login() {
-		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
+	 public void login() {
 		driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
 		driver.findElement(By.xpath("//*[@id='password']")).sendKeys("1234");
 		driver.findElement(By.xpath("//*[@id='btnSave']")).click();
 
+
 	}
 	@Test(priority=1)
 	public void serchCompany() throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, 20);
-		WebElement textbox = wait.until(ExpectedConditions
-				.visibilityOfElementLocated(By
-						.xpath("//input[@id='SearchBox']")));
-		textbox.sendKeys(Companyname);
-		List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
-		int count=allOptions.size();
-		System.out.println("No.of Autosuggesion "+count);
-		System.out.println("List of Autosuggesion");
-		for(int i=0;i<count;i++){
-			String text = allOptions.get(i).getText();
-			System.out.println(text);	
-		}
-		//textbox.sendKeys(Keys.ARROW_DOWN);
-		textbox.sendKeys(Keys.ENTER);
+		WebDriverWait wait = new WebDriverWait(driver, 70);
+		 WebElement textbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='SearchBox']")));
+		 
+		// WebElement textbox = driver.findElement(By.xpath("//*[@id='SearchBox']"));
+			//textbox.clear();
+		    Thread.sleep(3000);
+			textbox.sendKeys(Companyname);
+			Thread.sleep(5000);
+			List<WebElement> allOptions= driver.findElements(By.xpath("//*[@class='textContent']"));
+			int count=allOptions.size();
+			System.out.println("No.of Autosuggesion "+count);
+			System.out.println("List of Autosuggesion");
+			for(int i=0;i<count;i++){
+				String text = allOptions.get(i).getText();
+				System.out.println(text);	
+			}
+			
+			//textbox.sendKeys(Keys.ARROW_DOWN);
+			
+			textbox.sendKeys(Keys.ENTER);
+			Thread.sleep(2000);
+			
+			System.out.println("company Selected Sucessfully");
+			/*WebElement pass = driver.findElement(By.xpath("//input[@id='txtPassword']"));
+			pass.sendKeys("1234");
+			pass.sendKeys(Keys.ENTER);*/
 	}
 	@Test(priority=2)
 	public void Master() throws InterruptedException {
@@ -233,7 +245,7 @@ public class Patient_Master {
     else
         System.out.print("email not valid"); 
 } */
-	@Test(priority=12)
+	@Test(priority=13)
 		public void Email(){
 			WebElement email = driver.findElement(By.xpath("//input[@id='txtEmailId']"));
 			email.clear();
@@ -256,6 +268,7 @@ public class Patient_Master {
 	}
 	
 	}
+	@Test(priority=15)
 	public void typeOFPatient() throws InterruptedException{
 		List<WebElement> allOptions6= driver.findElements(By.xpath("//select[@id='txtPatientType']"));
 		int count6=allOptions6.size();
@@ -271,18 +284,24 @@ public class Patient_Master {
 		Thread.sleep(2000);	
 		Select SaleRate = new Select(driver.findElement(By.xpath("//select[@id='txtPatientType']")));
 		SaleRate.selectByVisibleText(Ptype);
+		
+		WebElement ptyp = driver.findElement(By.xpath("//select[@id='txtPatientType']"));
+		ptyp.sendKeys(Keys.ENTER);
+		
+		Thread.sleep(2000);
 	}
-	@Test(priority=15)
+	@Test(priority=16)
 	public void Desce() throws InterruptedException{
 		WebElement des = driver.findElement(By.xpath("//input[@id='txtdisease']"));
 		des.clear();
 		des.sendKeys(Keys.SPACE);
 		
-		WebElement searchDes = driver.findElement(By.xpath("//*[@id='SearchBox']"));
+		WebElement searchDes = driver.findElement(By.xpath("//input[@id='txtdisease']"));
+		Thread.sleep(3000);
 		searchDes.sendKeys(Des);
 		Thread.sleep(5000);
 		
-		List<WebElement> DesGrop = driver.findElements(By.xpath("//div[@class='fixWidth wth40']//div[@class='ag-body-viewport ag-layout-normal']"));
+		List<WebElement> DesGrop = driver.findElements(By.xpath("//ag-grid-angular[@id='diseasemester']//div[@class='ag-body-viewport ag-layout-normal']"));
 		int count1=DesGrop.size();
 		System.out.println("No.of Autosuggesion "+ count1);
 		System.out.println("List of Autosuggesion");
@@ -294,13 +313,13 @@ public class Patient_Master {
 		des.sendKeys(Keys.ENTER);
 
 	}
-	@Test(priority=16)
+	@Test(priority=17)
 	public void discount(){
 		WebElement dics = driver.findElement(By.xpath("//input[@id='txtDiscount']"));
 		dics.clear();
 		dics.sendKeys(Pdisc);
 	}
-	@Test(priority=17)
+	@Test(priority=18)
 	public void savep() throws InterruptedException{
 		driver.findElement(By.xpath("//button[@id='btn-Save']")).click();
 		Thread.sleep(2000);

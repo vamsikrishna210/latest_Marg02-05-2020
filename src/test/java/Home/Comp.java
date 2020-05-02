@@ -82,6 +82,7 @@ public class Comp {
 		driver.findElement(By.xpath("//button[@id='btn-New']")).click();
 		System.out.println("Company name:-" + Company_name);
 		driver.findElement(By.xpath("//input[@id='txtcompname']")).sendKeys(Company_name);
+		
 		System.out.println("company name given successfully");
 		driver.findElement(By.id("txtaddress1")).sendKeys(Address1);
 		System.out.println("Address 1 given successfully");
@@ -165,8 +166,7 @@ public class Comp {
 		}
 		
 	   
-        
-       
+  
         
         List<WebElement> eBusType = driver.findElements(By.xpath("//select[@id='ddlbusinesstype']"));
       int countBt= eBusType.size();

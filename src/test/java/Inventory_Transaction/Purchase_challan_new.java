@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -67,7 +66,7 @@ public class Purchase_challan_new {
 
 	@BeforeSuite
 	 public void webLaunch() {
-		 System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
+		// System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
 		 System.setProperty("webdriver.chrome.driver","C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
 			driver= new ChromeDriver();
 			driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
@@ -77,7 +76,7 @@ public class Purchase_challan_new {
 		}
 	@BeforeTest
 	 public void login() {
-		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
+		driver.findElement(By.xpath("//a[@class='nav-link login']")).click();
 		driver.findElement(By.id("userid")).sendKeys(user);
 		driver.findElement(By.id("password")).sendKeys("1234");
 		driver.findElement(By.id("btnSave")).click();
@@ -268,7 +267,14 @@ public class Purchase_challan_new {
 		}
 		
 	}
-  @Test(priority=5)
+	@Test(priority=5)
+	public void store(){
+		if(!driver.findElements(By.xpath("//*[contains(@id,'txtStore')]")).isEmpty()){
+			WebElement str = driver.findElement(By.xpath("//*[contains(@id,'txtStore')]"));
+			str.sendKeys(Keys.ENTER);
+		}
+	}
+  @Test(priority=6)
   public void Purtype() throws InterruptedException{
 	  if(driver.findElement(By.xpath("//*[@id='txtisPurchaseTypeForBilling']/option[1]")).isSelected()){
 		  WebElement pendorder = driver.findElement(By.xpath("//input[@id='SearchBox']"));
@@ -286,7 +292,7 @@ public class Purchase_challan_new {
 	  }
 	  
   }
-  @Test(priority=6)
+  @Test(priority=7)
   public void pendingor() throws InterruptedException{
 	  if(!driver.findElements(By.xpath("//input[@id='SearchBox']")).isEmpty()){
 		  WebElement pendorder = driver.findElement(By.xpath("//input[@id='SearchBox']"));
@@ -316,7 +322,7 @@ public class Purchase_challan_new {
 			esc1.click();
 		}
 	  }
-  @Test(priority=7)
+  @Test(priority=8)
   public void itemCode(){
 	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-cus_itemCode-0')]")).isEmpty()){
 		  WebElement iCode = driver.findElement(By.xpath("//*[contains(@id,'txt-cus_itemCode-0')]"));
@@ -332,6 +338,12 @@ public class Purchase_challan_new {
 	  }
 	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-cus_itemCode-2')]")).isEmpty()){
 		  WebElement iCode = driver.findElement(By.xpath("//*[contains(@id,'txt-cus_itemCode-2')]"));
+		  iCode.sendKeys(ItemCode1);  
+		  iCode.sendKeys(Keys.ENTER);
+		  System.out.println("searched with Code");
+	  }
+	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-cus_itemCode-3')]")).isEmpty()){
+		  WebElement iCode = driver.findElement(By.xpath("//*[contains(@id,'txt-cus_itemCode-3')]"));
 		  iCode.sendKeys(ItemCode1);  
 		  iCode.sendKeys(Keys.ENTER);
 		  System.out.println("searched with Code");
@@ -358,24 +370,30 @@ public class Purchase_challan_new {
 		  BCode.sendKeys(Keys.ENTER); 
 		  System.out.println("searched with BarCode Row 2");
 	  }
+	  if(!driver.findElements(By.xpath("//input[@id='txt-tmp_barcode-3']")).isEmpty()){
+		  WebElement BCode = driver.findElement(By.xpath("//input[@id='txt-tmp_barcode-3']"));
+		  BCode.sendKeys(BarCode);
+		  BCode.sendKeys(Keys.ENTER); 
+		  System.out.println("searched with BarCode Row 3");
+	  }
 	  else {
 		  
 	  } System.out.println("Barcode not avilble");
   
   }
-  @Test(priority=8)
+  @Test(priority=9)
   public void itemSelect() throws InterruptedException{
 	  // Row 0
 	    if(!driver.findElements(By.xpath("//input[@id='txt-itemLinkID-0']")).isEmpty()){
 	    WebElement prov = driver.findElement(By.xpath("//input[@id='txt-itemLinkID-0']"));
 		prov.sendKeys(Keys.SPACE);
 		
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(driver, 5);
 		WebElement Seritem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='searchItems']")));
 		Seritem.sendKeys(Item1);
 		Thread.sleep(3000);
 		Seritem.sendKeys(Keys.ENTER);
-		System.out.println("item selected sucessfully");
+		System.out.println("item selected sucessfully roe 0");
 	  }// Row 1
 	  if(!driver.findElements(By.xpath("//input[@id='txt-itemLinkID-1']")).isEmpty()){
 		    WebElement prov = driver.findElement(By.xpath("//input[@id='txt-itemLinkID-1']"));
@@ -387,7 +405,7 @@ public class Purchase_challan_new {
 			Thread.sleep(3000);
 			Seritem.sendKeys(Keys.ENTER);
 			
-			System.out.println("item selected sucessfully");
+			System.out.println("item selected sucessfully row 1");
 		  }
 	  // Row 2
 	  if(!driver.findElements(By.xpath("//input[@id='txt-itemLinkID-2']")).isEmpty()){
@@ -400,21 +418,147 @@ public class Purchase_challan_new {
 			Thread.sleep(3000);
 			Seritem.sendKeys(Keys.ENTER);
 			
-			System.out.println("item selected sucessfully");
+			System.out.println("item selected sucessfully row 2");
 		  }
+	  if(!driver.findElements(By.xpath("//input[@id='txt-itemLinkID-3']")).isEmpty()){
+		    WebElement prov = driver.findElement(By.xpath("//input[@id='txt-itemLinkID-3']"));
+			prov.sendKeys(Keys.SPACE);
+			
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			WebElement Seritem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='searchItems']")));
+			Seritem.sendKeys(Item1);
+			Thread.sleep(3000);
+			Seritem.sendKeys(Keys.ENTER);
+			System.out.println("item selected sucessfully row 3");
+	  }
   }
-  @Test(priority=9)
+  @Test(priority=10)
   public void  quaty(){
-	 
+	  if(!driver.findElements(By.xpath("//*[@id='txt-quantity-0']")).isEmpty()){
+			WebElement Qty = driver.findElement(By.xpath("//input[@id='txt-quantity-0']"));
+			//Qty.sendKeys(Keys.BACK_SPACE);
+			Qty.sendKeys(Qty1);
+			Qty.sendKeys(Keys.ENTER);
+		}
+		else{
+			WebElement Qty1 = driver.findElement(By.xpath("//input[@id='txt-unitFromEnteredValue-0']"));
+			//Qty1.sendKeys(Keys.BACK_SPACE);
+			Qty1.sendKeys(Unit2);
+			Qty1.sendKeys(Keys.ENTER);
+			
+			WebElement pcs = driver.findElement(By.xpath("//*[contains(@id,'txt-unitToEnteredValue-0')]"));
+			//pcs.sendKeys(Keys.BACK_SPACE);
+			pcs.sendKeys(Unit1);
+			pcs.sendKeys(Keys.ENTER);
+		}
 	  
-	  // Stop due to focus issue
+	  // Row 1
+	  
+	  if(!driver.findElements(By.xpath("//*[@id='txt-quantity-1']")).isEmpty()){
+			WebElement Qty = driver.findElement(By.xpath("//input[@id='txt-quantity-1']"));
+			//Qty.sendKeys(Keys.BACK_SPACE);
+			Qty.sendKeys(Qty1);
+			Qty.sendKeys(Keys.ENTER);
+		}
+		else{
+			WebElement Qty1 = driver.findElement(By.xpath("//input[@id='txt-unitFromEnteredValue-']"));
+			//Qty1.sendKeys(Keys.BACK_SPACE);
+			Qty1.sendKeys(Unit2);
+			Qty1.sendKeys(Keys.ENTER);
+			
+			WebElement pcs = driver.findElement(By.xpath("//*[contains(@id,'txt-unitToEnteredValue-1')]"));
+			//pcs.sendKeys(Keys.BACK_SPACE);
+			pcs.sendKeys(Unit1);
+			pcs.sendKeys(Keys.ENTER);
+		}
+	  //row 2
+	  if(!driver.findElements(By.xpath("//*[@id='txt-quantity-2']")).isEmpty()){
+			WebElement Qty = driver.findElement(By.xpath("//input[@id='txt-quantity-2']"));
+			//Qty.sendKeys(Keys.BACK_SPACE);
+			Qty.sendKeys(Qty1);
+			Qty.sendKeys(Keys.ENTER);
+		}
+		else{
+			WebElement Qty1 = driver.findElement(By.xpath("//input[@id='txt-unitFromEnteredValue-2']"));
+			//Qty1.sendKeys(Keys.BACK_SPACE);
+			Qty1.sendKeys(Unit2);
+			Qty1.sendKeys(Keys.ENTER);
+			
+			WebElement pcs = driver.findElement(By.xpath("//*[contains(@id,'txt-unitToEnteredValue-2')]"));
+			//pcs.sendKeys(Keys.BACK_SPACE);
+			pcs.sendKeys(Unit1);
+			pcs.sendKeys(Keys.ENTER);
+		}
+	  // row 3
+	  if(!driver.findElements(By.xpath("//*[@id='txt-quantity-3']")).isEmpty()){
+			WebElement Qty = driver.findElement(By.xpath("//input[@id='txt-quantity-3']"));
+			//Qty.sendKeys(Keys.BACK_SPACE);
+			Qty.sendKeys(Qty1);
+			Qty.sendKeys(Keys.ENTER);
+		}
+		else{
+			WebElement Qty1 = driver.findElement(By.xpath("//input[@id='txt-unitFromEnteredValue-3']"));
+			//Qty1.sendKeys(Keys.BACK_SPACE);
+			Qty1.sendKeys(Unit2);
+			Qty1.sendKeys(Keys.ENTER);
+			
+			WebElement pcs = driver.findElement(By.xpath("//*[contains(@id,'txt-unitToEnteredValue-3')]"));
+			//pcs.sendKeys(Keys.BACK_SPACE);
+			pcs.sendKeys(Unit1);
+			pcs.sendKeys(Keys.ENTER);
+		}
+	  
+
+	  
+  }
+  @Test(priority=11)
+  public void free(){
+	  //row 0
 	  
 	  
 	  
+	  
+	  
+	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-free-0')]")).isEmpty()){
+		  WebElement free0 = driver.findElement(By.xpath("//*[contains(@id,'txt-free-0')]"));
+		  free0.sendKeys(Keys.BACK_SPACE);
+		  free0.sendKeys(Free);
+		  free0.sendKeys(Keys.ENTER);
+		  System.out.println("row 0");
+	  }
+	  //  row 1
+	  
+	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-free-1')]")).isEmpty()){
+		  WebElement free0 = driver.findElement(By.xpath("//*[contains(@id,'txt-free-1')]"));
+		  free0.sendKeys(Keys.BACK_SPACE);
+		  free0.sendKeys(Free);
+		  free0.sendKeys(Keys.ENTER);
+		  System.out.println("row 1");
+	  }
+	  // row2
+	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-free-2')]")).isEmpty()){
+		  WebElement free0 = driver.findElement(By.xpath("//*[contains(@id,'txt-free-2')]"));
+		  free0.sendKeys(Keys.BACK_SPACE);
+		  free0.sendKeys(Free);
+		  free0.sendKeys(Keys.ENTER);
+		  System.out.println("row 2");
+	  }
+	  // row 3
+	  if(!driver.findElements(By.xpath("//*[contains(@id,'txt-free-3')]")).isEmpty()){
+		  WebElement free0 = driver.findElement(By.xpath("//*[contains(@id,'txt-free-3')]"));
+		  free0.sendKeys(Keys.BACK_SPACE);
+		  free0.sendKeys(Free);
+		  free0.sendKeys(Keys.ENTER);
+		  System.out.println("row 3");
+	  }
+	  
+	  
+	  
+	  
+		}
   }
   
   
-}
 
 
 

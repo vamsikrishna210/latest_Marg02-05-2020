@@ -29,7 +29,7 @@ public class Groupmaster_new {
 	String pass         =		reader.getCellData("HSN", "password", 2);
 	String Companyname  = 		reader.getCellData("HSN", "Company_name", 2);
 	String Grpname         = 		reader.getCellData("HSN", "Group_Name", 2);
-	//String HName        = 		reader.getCellData("HSN", "Hsn_Name", 2);
+	String Grp2        = 		reader.getCellData("HSN", "Grp_Re", 2);
 
 	@BeforeSuite
 	public void webLaunch() {
@@ -86,8 +86,20 @@ public class Groupmaster_new {
 		driver.findElement(By.id("btn-New")).click();
 	}
 		 @Test(priority = 3)
-	public void name(){
-		driver.findElement(By.id("txtGroupName")).sendKeys(Grpname);
+	public void name() throws InterruptedException{
+		WebElement grp = driver.findElement(By.id("txtGroupName"));
+		grp.sendKeys(Grpname);
+		
+		grp.sendKeys(Keys.ENTER);
+		Thread.sleep(3000);
+		WebElement e1 = driver.findElement(By.xpath("//span[contains(text(),'Group name already exists !')]"));
+		System.out.println(e1.getText());
+		
+		if(e1.getText().equals("Group name already exists !")){
+			grp.clear();
+			grp.sendKeys(Grp2);
+			grp.sendKeys(Keys.ENTER);
+		}		
 	}
 	
 		 @Test(priority = 4)

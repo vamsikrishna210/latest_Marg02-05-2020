@@ -53,11 +53,12 @@ public class Agency_Master_New {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		Wait = new WebDriverWait(driver, 20);
+		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
 	}
 
 	@BeforeTest
 	public void login() {
-		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
+		
 		driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
 		driver.findElement(By.xpath("//*[@id='password']")).sendKeys("1234");
 		driver.findElement(By.xpath("//*[@id='btnSave']")).click();
@@ -70,6 +71,7 @@ public class Agency_Master_New {
 		WebElement textbox = wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By
 						.xpath("//input[@id='SearchBox']")));
+		Thread.sleep(3000);
 		textbox.sendKeys(Companyname);
 		List<WebElement> allOptions = driver.findElements(By
 				.xpath("//*[@class='textContent']"));
@@ -100,9 +102,25 @@ public class Agency_Master_New {
 	public void newb() {
 		driver.findElement(By.id("btn-New")).click();
 	}
+	
+	
+	
 	@Test(priority = 3)
-	public void create() {
-		driver.findElement(By.id("txtCName")).sendKeys(AgencyName);
+	public void create() throws InterruptedException {
+		WebElement agencynm = driver.findElement(By.id("txtCName"));
+		agencynm.sendKeys(AgencyName);
+		agencynm.sendKeys(Keys.ENTER);
+		Thread.sleep(3000);
+		WebElement e1 = driver.findElement(By.xpath("//span[contains(text(),'Agency name already exists !')]"));
+		System.out.println(e1.getText());
+		
+		if(e1.getText().equals("Agency name already exists !")){
+			agencynm.clear();
+			agencynm.sendKeys("12345Ag");
+			agencynm.sendKeys(Keys.ENTER);
+		}
+			
+		
 		driver.findElement(By.id("txtbillprint")).sendKeys(InvDx);
 		driver.findElement(By.id("txtDumpdays")).sendKeys(Dump);
 	}

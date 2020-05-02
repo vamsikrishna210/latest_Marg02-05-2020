@@ -87,7 +87,8 @@ public class Hsn_San_new {
 	}
 	@Test(priority = 3)
 	public void code(){
-		driver.findElement(By.id("inphsncode")).sendKeys(Code);
+		WebElement  cod = driver.findElement(By.id("inphsncode"));
+		cod.sendKeys(Code);
 		
 	}
 	@Test(priority = 4)

@@ -21,6 +21,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import com.margerp.qa.xls_Reader.Xls_Reader;
 // Item Data need to send from EXEl Sheet
@@ -76,7 +79,7 @@ public class Item_Mater_New {
 	String Prohb       =	reader.getCellData("Item", "Proh_Drp", 2);
 	String IVisible    =	reader.getCellData("Item", "Visiblity_Drp", 2);
 	String MfR         =	reader.getCellData("Item", "MFR_Item", 2);
-
+@BeforeSuite
 	 	 public void webLaunch() {
 	    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
 	    	 driver = new ChromeDriver();
@@ -85,6 +88,7 @@ public class Item_Mater_New {
 	    	driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 	    	Wait= new WebDriverWait(driver,20);
 		}
+@BeforeTest
 	 public void login() {
 		 driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
 			driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
@@ -93,10 +97,12 @@ public class Item_Mater_New {
 
 
 	}
+@Test(priority=1)
 	 public void action() throws InterruptedException{
 		 WebDriverWait wait = new WebDriverWait(driver, 20);
 			WebElement textbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By
 							.xpath("//input[@id='SearchBox']")));
+			Thread.sleep(2000);
 			textbox.sendKeys(Companyname);
 			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 			List<WebElement> allOptions= driver.findElements(By.xpath("//*[@class='textContent']"));
@@ -120,12 +126,12 @@ public class Item_Mater_New {
 			submenu1.sendKeys(Keys.ENTER);
 			Thread.sleep(2000);
 			driver.findElement(By.linkText("Item Master")).click();
-	 }
+	 }@Test(priority=2)
 	 public void newb() throws InterruptedException{
 		 Thread.sleep(2000);
 			driver.findElement(By.xpath("//button[@title='New']")).click();
 	 }
-	 
+	 @Test(priority=3)
 	 public void itmecod(){
 		 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		 if (driver.findElement(By.xpath("//*[@id='txtItemCodeRequired']/option[1]")).isSelected()) {
@@ -143,6 +149,8 @@ public class Item_Mater_New {
 				itmcode.sendKeys(Itemcode);
 			}
 		} 
+	 
+	 @Test(priority=4)
 	 public void typesupp(){
 		 List<WebElement> listTs =	driver.findElements(By.id("typeofSupply"));
          int countTs= listTs.size();
@@ -154,6 +162,7 @@ public class Item_Mater_New {
         Select  supply = new Select(driver.findElement(By.id("typeofSupply")));
         supply.selectByVisibleText(Goods);
 	 }
+	 @Test(priority=5)
 	 public void barcode(){
 		 
 		 if (driver.findElement(By.xpath("//*[@id='barcode']/option[2]")).isSelected()) {
@@ -166,11 +175,13 @@ public class Item_Mater_New {
 				driver.findElement(By.xpath("//input[@id='txtProduct']")).sendKeys(ProName);
 			}
 	 }
+	 @Test(priority=6)
 	 public void productname(){
 		 WebElement Pronmae = driver.findElement(By.xpath("//input[@id='txtProduct']"));
 		 Pronmae.clear();
 		 Pronmae.sendKeys(ProName);
 	 }
+	 @Test(priority=7)
 	 // paking
 	 public void pkng(){
 		  if(driver.findElement(By.xpath("//*[@id='packing']/option[1]")).isSelected()){
@@ -183,7 +194,7 @@ public class Item_Mater_New {
 		  }
 	    
 	 }
-	 
+	 @Test(priority=8)
 	 public void printName(){
 		 if(driver.findElement(By.xpath("//*[@id='isPrintNameRequired']/option[1]")).isSelected()){
 			 driver.findElement(By.xpath("//input[@id='unit']"));
@@ -194,6 +205,7 @@ public class Item_Mater_New {
 			  pakng.sendKeys(Packing);
 		  }
 	 }
+	 @Test(priority=9)
 	 public void unit() throws InterruptedException{
 		
 		/* WebElement  Unit = driver.findElement(By.xpath("//input[@id='unit']"));
@@ -274,12 +286,12 @@ public class Item_Mater_New {
 			}
 			Select UQC = new Select(driver.findElement(By.xpath("//input[@id='unit']")));
 			UQC.selectByVisibleText("KGS-KILOGRAMS");*/
-	 
+	 @Test(priority=10)
 	 public void decml(){
 		 Select decml= new Select(driver.findElement(By.xpath("//select[@id='deciaml']")));
 		 decml.selectByVisibleText(Decimal);
 	 }
-	 
+	 @Test(priority=11)
 	 public void IHsn() throws InterruptedException{
 		 WebElement textbox=driver.findElement(By.xpath("//input[@id='hsn']"));
 		 textbox.clear();
@@ -335,7 +347,7 @@ public class Item_Mater_New {
 	 
 	 driver.findElement(By.xpath("//button[@id='btn-Save']")).click();*/
 	 } 
-	 
+	 @Test(priority=11)
 	 public void ITax() throws InterruptedException{
 		 WebElement textbox=driver.findElement(By.xpath("//input[@id='taxxCategory']"));
 		 textbox.clear();
@@ -358,6 +370,7 @@ public class Item_Mater_New {
 		 }
 		 //driver.findElement(By.xpath("//div[@class='text-right pageButton']//button[1]")).click();*/
 	 }
+	 @Test(priority=12)
 	 public void agennreq() throws InterruptedException{
 		 if(driver.findElement(By.xpath("//*[@id='isAgencyRequired']/option[1]")).isSelected()){
 			 driver.findElement(By.xpath("//input[@id='salt']"));
@@ -428,6 +441,7 @@ public class Item_Mater_New {
 		((JavascriptExecutor)driver).executeScript("arguments[0].click()", el);
 	}*/
 	 }
+	 @Test(priority=13)
 	 public void ItemSalt() throws InterruptedException{
 		 if(driver.findElement(By.xpath("//*[@id='salt']/option[1]")).isSelected()){
 			 driver.findElement(By.xpath("//select[@id='Category']"));
@@ -492,6 +506,7 @@ public class Item_Mater_New {
 			driver.findElement(By.xpath("//*[@id='btn-Save']/span[1]")).click();*/
 	 }
 	 }
+	 @Test(priority=14)
 	 public void Icat() throws InterruptedException{
 		 if(driver.findElement(By.xpath("//*[@id='Category']/option[1]")).isSelected()){
 			 driver.findElement(By.xpath("//select[@id='rackno']"));
@@ -530,6 +545,7 @@ public class Item_Mater_New {
 		 
 		 
 	 }
+	 @Test(priority=15)
 	 public void rackno(){
 		 if(driver.findElement(By.xpath("//*[@id='rackno']/option[1]")).isSelected()){
 			 driver.findElement(By.xpath("//select[@id='Negative']"));
@@ -562,11 +578,12 @@ public class Item_Mater_New {
 		 */
 		 
 	 } 
+	 @Test(priority=16)
 	 public void negtive(){
 		 Select neg = new Select (driver.findElement(By.xpath("//select[@id='Negative']")));
 		 neg.selectByVisibleText(Negtive);
 	 }
-	 
+	 @Test(priority=17)
 	 public void purchaseinfo(){
 		 WebElement MRP=driver.findElement(By.xpath("//input[@id='txtmrp']"));
 		 MRP.sendKeys(MRP1);
@@ -581,6 +598,7 @@ public class Item_Mater_New {
 		 Cost.sendKeys(Keys.ENTER);
 		 
 	 }
+	 @Test(priority=18)
 	 public void Saleinfo() {
 		 WebElement RateA=driver.findElement(By.xpath("//input[@id='txtratea']"));
 		 RateA.sendKeys(RateA1);
@@ -592,6 +610,7 @@ public class Item_Mater_New {
 		 
 		
 	 }
+	 @Test(priority=19)
 	 public void Scheam(){
 		 WebElement schm = driver.findElement(By.xpath("//*[@id='txtScheme']"));
 		 schm.clear();
@@ -605,6 +624,7 @@ public class Item_Mater_New {
 	     Scheam.selectByVisibleText(SchmType);
 		 
 	 }
+	 @Test(priority=20)
 	 public void narho(){
 		 Select Narch = new Select(driver.findElement(By.xpath("//select[@id='narcotic']")));
 	     Narch.selectByVisibleText(Narcho);
@@ -626,7 +646,7 @@ public class Item_Mater_New {
 		 
 	  
 	 }
-	 
+	 @Test(priority=21)
 	 public void extraReates(){
 	     WebElement RateC=driver.findElement(By.xpath("//input[@id='txtratec']"));
 		 RateC.sendKeys("0");
@@ -655,6 +675,7 @@ public class Item_Mater_New {
 		 
 		 
 	 }
+	 @Test(priority=22)
 	 public void Discinfo() throws InterruptedException{
 		// driver.findElement(By.id("ddldiscount")).click();  
 		    List<WebElement> allOptions= driver.findElements(By.id("ddldiscount"));
@@ -711,6 +732,7 @@ public class Item_Mater_New {
 		    dateBox2.sendKeys(Keys.ENTER);
 		    Thread.sleep(2000);*/
 		 }
+	 @Test(priority=23)
 	 public void Quantity(){
 		 driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
 		/* WebElement Dsq = driver.findElement(By.id("txtBoxQuantity"));
@@ -741,6 +763,7 @@ public class Item_Mater_New {
 		TC.sendKeys("98506546545654654");
 		TC.sendKeys(Keys.ENTER);*/
 	 }
+	 @Test(priority=24)
 	 public void OtherInfo() throws InterruptedException{
 		WebElement minmmrgn =  driver.findElement(By.xpath("//input[@id='txtMinimumMargin']"));
 		minmmrgn.sendKeys(MinPer);
@@ -780,7 +803,7 @@ public class Item_Mater_New {
 	
 	        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);*/
 	}
-		
+	 @Test(priority=25)
 	public void upload1() throws InterruptedException, AWTException{
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.findElement(By.xpath("//button[@id='btnEdit']")).click();
@@ -797,10 +820,11 @@ public class Item_Mater_New {
 		   robot.keyPress(KeyEvent.VK_ENTER);
 		   robot.keyRelease(KeyEvent.VK_ENTER);
 	}
+	 @Test(priority=26)
 	 public void SaveI(){
 		 driver.findElement(By.xpath("//button[@id='btnSave']")).click();
 	 }
-	 public static void main(String[] args) throws InterruptedException, AWTException {
+	 /*public static void main(String[] args) throws InterruptedException, AWTException {
 		Item_Mater_New imn = new Item_Mater_New();
 		imn.webLaunch();
 		imn.login();
@@ -831,5 +855,5 @@ public class Item_Mater_New {
 		imn.OtherInfo();
 		//imn.upload1();
 		imn.SaveI();
-	}
+	}*/
 }

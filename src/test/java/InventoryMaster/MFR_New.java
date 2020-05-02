@@ -28,6 +28,7 @@ public class MFR_New {
 	String pass         =		reader.getCellData("MFR", "password", 2);
 	String Companyname  = 		reader.getCellData("MFR", "Company_name", 2);
 	String MFName       =       reader.getCellData("MFR", "MFR_Name", 2);
+	String MFNameD      =       reader.getCellData("MFR", "MFr_Dup", 2);
 	String Mro          = 		reader.getCellData("MFR", "More", 2);
 	String ctry         =       reader.getCellData("MFR", "Country", 2);
 	String stst         =		reader.getCellData("MFR", "State", 2);
@@ -46,7 +47,8 @@ public class MFR_New {
 	String stus         =		reader.getCellData("MFR", "Status", 2);
 	String web         =		reader.getCellData("MFR", "Web_Site", 2);
 	String prob         =		reader.getCellData("MFR", "Prohib", 2);
-
+	
+//
 	@BeforeSuite
 	public void webLaunch() {      
 		System.setProperty("webdriver.chrome.driver",
@@ -56,11 +58,12 @@ public class MFR_New {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		Wait = new WebDriverWait(driver, 20);
+		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
 	}
 
 	@BeforeTest
 	public void login() {
-		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
+		
 		driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
 		driver.findElement(By.xpath("//*[@id='password']")).sendKeys("1234");
 		driver.findElement(By.xpath("//*[@id='btnSave']")).click();
@@ -72,6 +75,7 @@ public class MFR_New {
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		WebElement textbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By
 						.xpath("//input[@id='SearchBox']")));
+		Thread.sleep(3000);
 		textbox.sendKeys(Companyname);
 		List<WebElement> allOptions = driver.findElements(By
 				.xpath("//*[@class='textContent']"));
@@ -102,8 +106,21 @@ public class MFR_New {
 		driver.findElement(By.id("btn-New")).click();
 	}
 	@Test(priority = 3)
-	public void name(){
-		driver.findElement(By.id("txtName")).sendKeys(MFName);
+	public void name() throws InterruptedException{
+		WebElement mf = driver.findElement(By.id("txtName"));
+		mf.sendKeys(MFName);
+		mf.sendKeys(Keys.ENTER);
+		Thread.sleep(2000);
+		
+		WebElement Nm1 = driver.findElement(By.xpath("//span[contains(text(),'Manufacturer name already exists !')]"));
+		System.out.println(Nm1.getText());
+		
+		if(Nm1.getText().equals("Manufacturer name already exists !")){
+			mf.clear();
+			mf.sendKeys(MFNameD);
+			mf.sendKeys(Keys.ENTER);
+		}		
+		
 	}
 	@Test(priority = 4)
 	public void more(){
@@ -169,7 +186,7 @@ public class MFR_New {
 	public void mobi(){
 
 		driver.findElement(By.id("txtPhone")).sendKeys(Phno);
-		driver.findElement(By.id("txtMobile")).sendKeys(Mob1);
+		driver.findElement(By.xpath("//input[@id='txtMobile']")).sendKeys(Mob1);
 		driver.findElement(By.id("btnMoreMobile")).click();
 	}
 	@Test(priority = 10)

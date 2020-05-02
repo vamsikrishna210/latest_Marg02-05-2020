@@ -20,6 +20,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import com.margerp.qa.xls_Reader.Xls_Reader;
 
@@ -114,7 +117,7 @@ public class Ledger_Master_Debtor {
 	String Ecode        =	reader.getCellData("Ledger", "E-Business Code", 2);
 	String Freez        =	reader.getCellData("Ledger", "Freeze upto", 2);
 	String LedCat       = 	reader.getCellData("Ledger","Ledger Category", 2);
-	
+	@BeforeSuite
     public void webLaunch() {
     	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
     	 driver = new ChromeDriver();
@@ -123,19 +126,22 @@ public class Ledger_Master_Debtor {
     	driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
     	Wait= new WebDriverWait(driver,20);
 	}
+	@BeforeTest
 	public void login() {
-		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
+		driver.findElement(By.xpath("//a[@class='nav-link login']")).click();
 		driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
 		driver.findElement(By.xpath("//*[@id='password']")).sendKeys("1234");
 		driver.findElement(By.xpath("//*[@id='btnSave']")).click();
 
 	}
+	@Test(priority=1)
 	public void serchCompany() throws InterruptedException {
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		WebElement textbox = wait.until(ExpectedConditions
 				.visibilityOfElementLocated(By
 						.xpath("//input[@id='SearchBox']")));
 		textbox.sendKeys(Companyname);
+		Thread.sleep(5000);
 		List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
 		int count=allOptions.size();
 		System.out.println("No.of Autosuggesion "+count);
@@ -147,6 +153,7 @@ public class Ledger_Master_Debtor {
 		//textbox.sendKeys(Keys.ARFROW_DOWN);
 		textbox.sendKeys(Keys.ENTER);
 	}
+	@Test(priority=2)
 	public void Master() throws InterruptedException {
 		Actions action = new Actions(driver);
 		WebElement menu = driver.findElement(By.linkText("Master"));
@@ -161,9 +168,11 @@ public class Ledger_Master_Debtor {
 		Thread.sleep(3000);
 		
 	}
+	@Test(priority=3)
 	public void newleder (){
 		driver.findElement(By.xpath("//button[@title='New']")).click();
 	}
+	@Test(priority=4)
 	public void ctrlrm () throws InterruptedException {
 		Thread.sleep(5000);
 		//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -186,6 +195,7 @@ public class Ledger_Master_Debtor {
 		
 
 	}
+	@Test(priority=4)
 	//New Name
 	public void newname() throws InterruptedException{
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -204,6 +214,7 @@ public class Ledger_Master_Debtor {
 			
 		
 	}
+	@Test(priority=5)
 	public void Account() throws InterruptedException{	
 		Thread.sleep(3000);
 		WebElement textbox1 = driver.findElement(By.xpath("//input[@id='drpAccountGroup']"));
@@ -222,12 +233,13 @@ public class Ledger_Master_Debtor {
 			//System.out.println(allOptions1.get(i).getText());
 		}
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-	    textbox1.sendKeys(Keys.ARROW_DOWN);
+	   // textbox1.sendKeys(Keys.ARROW_DOWN);
 		textbox1.sendKeys(Keys.ENTER);
 		/*Select Sud = new Select(driver.findElement(By.xpath("//*[@class='dropdown-menu show']")));
 		Sud.selectByVisibleText("SUNDRY DEBTORS");*/
 
 	}
+	@Test(priority=6)
 	//Control Room
 	public void morectrlrm() throws InterruptedException{
 		driver.findElement(
@@ -289,6 +301,7 @@ public class Ledger_Master_Debtor {
         // Close Control room
 		driver.findElement(By.xpath("//button[@class='close itemcontrolClose']")).click();
 	}
+	@Test(priority=7)
 	public void mailto() throws InterruptedException{
 		WebElement mail = driver.findElement(By.id("txtMailTo"));
 		mail.clear();
@@ -301,6 +314,7 @@ public class Ledger_Master_Debtor {
 		
 	}
 	//country
+	@Test(priority=8)
 	public void country() throws InterruptedException{
 		WebElement textbox2 = driver.findElement(By.xpath("//input[@id='ddlCountryLinkID']"));
 		textbox2.clear();
@@ -315,7 +329,7 @@ public class Ledger_Master_Debtor {
 			String text2 = allOptions2.get(i).getText();
 			System.out.println(text2);	
 		}
-		    textbox2.sendKeys(Keys.ARROW_DOWN);
+		    //textbox2.sendKeys(Keys.ARROW_DOWN);
 			//textbox2.sendKeys(Keys.ARROW_DOWN);
 			textbox2.sendKeys(Keys.ENTER);	
 		
@@ -352,6 +366,7 @@ public class Ledger_Master_Debtor {
 		
 	        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
+	@Test(priority=9)
 	// State
 	  public void state() throws InterruptedException{
 		WebElement textbox3 = driver.findElement(By.id("ddlStateLinkID"));
@@ -371,18 +386,21 @@ public class Ledger_Master_Debtor {
 		}
 		
 		//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-			textbox3.sendKeys(Keys.ARROW_DOWN);
+			//textbox3.sendKeys(Keys.ARROW_DOWN);
 			textbox3.sendKeys(Keys.ENTER);
 			
 	}
+	@Test(priority=10)
 	  // city
 	public void city(){
 		 driver.findElement(By.xpath("//*[@id='ddlCity']")).sendKeys(City);
 	}
 	// Pincode
+	@Test(priority=11)
 	public void pin(){
 		driver.findElement(By.id("txtPostalCode")).sendKeys(Pin);
 	}
+	@Test(priority=12)
 	//opening balance
 	public void balance() throws InterruptedException{
 		List<WebElement> allOptions4= driver.findElements(By.id("ddlBalancingMethod"));
@@ -474,6 +492,7 @@ public class Ledger_Master_Debtor {
 	}
 		
 }
+	@Test(priority=13)
 	//Contact
 	public void contact() throws InterruptedException{
 		driver.findElement(By.xpath("//input[@id='txtPhoneNo']")).sendKeys(Phn);
@@ -487,6 +506,7 @@ public class Ledger_Master_Debtor {
 		driver.findElement(By.id("btnSave")).click();
 		Thread.sleep(2000);
 	}
+	@Test(priority=14)
 	//GST&TAX
 	public void Gst(){
 		/*driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -513,7 +533,7 @@ public class Ledger_Master_Debtor {
 	    PAN.sendKeys("PANCARD");*/
 		//driver.findElement(By.id("txtPANNo")).sendKeys("AAOCS1149R");
 	}
-	
+	@Test(priority=15)
 	public void ledgertype() throws InterruptedException{
 		
 		List<WebElement> allOptions5= driver.findElements(By.id("ddlLedgerType"));
@@ -538,6 +558,7 @@ public class Ledger_Master_Debtor {
 		
 		driver.findElement(By.xpath("//*[@id='btn-Switch Tab']")).click();
 	}
+	@Test(priority=16)
 	//Licence INfo
 	public void licenceinf(){
 		//driver.findElement(By.xpath("//*[@id='btn-Switch Tab']")).click();
@@ -566,6 +587,7 @@ public class Ledger_Master_Debtor {
 	    driver.findElement(By.xpath("//*[@id='btn-Switch Tab']/span[1]")).click();*/
 	    
 	}
+	@Test(priority=17)
 	//Contact INfo
 	public void continfo(){
 		 Select MFRTYP = new Select(driver.findElement(By.id("ddlPersonPrefix")));
@@ -579,7 +601,7 @@ public class Ledger_Master_Debtor {
 		    driver.findElement(By.xpath("//*[@id='btn-Switch Tab']")).click();
 	}
 	//others
-	
+	@Test(priority=18)
 	//Discount
 	public void Discounts() throws InterruptedException{
 		driver.findElement(By.xpath("//button[@id='btnDiscounts']")).click();
@@ -597,7 +619,7 @@ public class Ledger_Master_Debtor {
 		//Remaing have to add after fixing the bugs
 		 driver.findElement(By.xpath("//button[@id='btn-Save']")).click();
 	}
-	
+	@Test(priority=19)
 	// Billing Rate
 	public void others() throws InterruptedException{
 		  
@@ -636,6 +658,7 @@ public class Ledger_Master_Debtor {
 		driver.findElement(By.xpath("//div[@class='pageButton']//button[@id='btn-Save']")).click(); 
 	}
 	//Limit
+	@Test(priority=20)
 	public void limit() throws InterruptedException{
 		driver.findElement(By.id("btnLimit")).click();
 		Thread.sleep(3000);
@@ -737,6 +760,7 @@ public class Ledger_Master_Debtor {
 		
 	}
 	//copy dealings
+	@Test(priority=21)
 	public void copydealings() throws InterruptedException{
 		driver.findElement(By.id("btnDealings")).click();
 		WebElement Copydealing = driver.findElement(By.xpath("//input[@id='drpCopyAutocomplete']"));
@@ -766,6 +790,7 @@ public class Ledger_Master_Debtor {
 	    driver.findElement(By.xpath("//div[@class='pageButton']//button[@id='btn-Save']")).click();
 	    
 	}
+	@Test(priority=22)
 	//transporter
 	public void transporter() throws InterruptedException{
 		 driver.findElement(By.id("btnTransport")).click();
@@ -809,6 +834,7 @@ public class Ledger_Master_Debtor {
 		    Deleveryby.sendKeys(Delever);
 			driver.findElement(By.xpath("//div[@class='pageButton']//button[@id='btn-Save']")).click();
 	}
+	@Test(priority=23)
 	public void mr() throws InterruptedException{
 		driver.findElement(By.id("btnMr")).click();
 		List<WebElement> listMr= driver.findElements(By.id("ddlmrlinkid"));
@@ -828,6 +854,7 @@ public class Ledger_Master_Debtor {
 		driver.findElement(By.id("btnSave")).click();
 		
 	}
+	@Test(priority=24)
 	public void event() throws InterruptedException{
 		driver.findElement(By.id("btnEvents")).click();
 		WebElement dateBoxB = driver.findElement(By.id("txtBirthday"));
@@ -837,6 +864,7 @@ public class Ledger_Master_Debtor {
 	    dateBoxA.sendKeys(Annuversy);
 	     driver.findElement(By.xpath("//div[@class='pageButton']//button[@id='btn-Save']")).click();
 	}
+	@Test(priority=25)
 	public void Geolocation(){
 	     
 	     driver.findElement(By.id("btnGeoLocation")).click();
@@ -845,6 +873,7 @@ public class Ledger_Master_Debtor {
 	     driver.findElement(By.xpath("//div[@class='pageButton']//button[@id='btn-Save']")).click();
 	    //driver.findElement(By.xpath("/html/body/ngb-modal-window/div/div/app-geolocation/div/button/span")).click();;
 	}
+	@Test(priority=26)
 	public void others2() throws InterruptedException{
 		driver.findElement(By.id("btnOthers")).click();
 	     
@@ -852,6 +881,7 @@ public class Ledger_Master_Debtor {
 	     dateBoxfreez.sendKeys(Freez);
 	     
 	}
+	@Test(priority=27)
 	public void ledgercatgry() throws InterruptedException{
 		List<WebElement> listLc= driver.findElements(By.id("ddlLedgerCategory"));
 		int countlc=listLc.size();
@@ -870,12 +900,13 @@ public class Ledger_Master_Debtor {
 		Thread.sleep(2000);
 		
 	}
-	
+	@Test(priority=28)
 	public void party() throws InterruptedException{
 		
 		Select actv = new Select(driver.findElement(By.id("ddlStatus")));
 		actv.selectByVisibleText("Active");
 	}
+	@Test(priority=29)
 	public void narcho() throws InterruptedException{
 		List<WebElement> listNrc= driver.findElements(By.id("ddlNarcoSchHItemBilling"));
 		int countNrc=listNrc.size();
@@ -925,6 +956,7 @@ public class Ledger_Master_Debtor {
         driver.findElement(By.id("txtInterest")).sendKeys("31.22");
         driver.findElement(By.id("txtItems")).sendKeys("123456");
 	}
+	@Test(priority=30)
 	public void uploadpic() throws InterruptedException, AWTException{
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		driver.findElement(By.xpath("//button[@id='btnEdit']")).click();
@@ -941,6 +973,7 @@ public class Ledger_Master_Debtor {
 		   robot.keyPress(KeyEvent.VK_ENTER);
 		   robot.keyRelease(KeyEvent.VK_ENTER);
 	}
+	@Test(priority=31)
 	public void invcmtd() throws InterruptedException{
 		 List<WebElement> listinvcf= driver.findElements(By.id("ddlInvoiceFormat1"));
 			int countInvc=listinvcf.size();
@@ -987,6 +1020,7 @@ public class Ledger_Master_Debtor {
          driver.findElement(By.id("btnSave")).click();
          driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
+	@Test(priority=32)
        public void saveled(){
          driver.findElement(By.id("btn-Save")).click();
         // 

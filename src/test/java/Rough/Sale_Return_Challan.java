@@ -49,7 +49,7 @@ public class Sale_Return_Challan {
 	String RetBill	   = 	reader.getCellData("Sale", "Return_Bill", 2);
 	
 	
-	@BeforeSuite
+	@BeforeSuite 
 	 public void webLaunch() {
 		
 	    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
@@ -298,11 +298,155 @@ public class Sale_Return_Challan {
 		}
 		// Ask on space bar
 		else if(driver.findElement(By.xpath("//*[@id='txtaskpartyinretailbilling']/option[3]")).isSelected()){
-			if(driver.findElement(By.xpath("//*[@id='askBillNo']/option[1]")).isSelected()){
+			//if(driver.findElement(By.xpath("//*[@id='askBillNo']/option[1]")).isSelected()){
 				 if(driver.findElement(By.xpath("//*[contains(@id,'txtLedgerName')]")).isDisplayed());{
 					 WebElement led =driver.findElement(By.xpath("//*[contains(@id,'txtLedgerName')]"));
-					    led.sendKeys(Keys.BACK_SPACE);
+					    //led.sendKeys(Keys.BACK_SPACE);
 					    led.sendKeys(Keys.SPACE);
+					//////// //After space  leger selection    
+					    Select led1 = new Select(driver.findElement(By.xpath("//*[@id='mrgSearchBox']")));
+				    	led1.selectByVisibleText(ledser);
+				    	
+				    	 if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[2]")).isSelected()){
+				        	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+				 			//textbox.clear();
+				 		    Thread.sleep(2000);
+				 			textbox.sendKeys(ledgername);
+				 			Thread.sleep(2000);
+				 			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+				 			/*if(!driver.findElements(By.xpath("//p[contains(text(),'Not Found!')]")).isEmpty()){
+				 			String Actul =driver.findElement(By.xpath("//p[contains(text(),'Not Found!')]")).getText();
+				 			//String typedValue = textbox.getAttribute("value");
+				 			String ttt= textbox.getText().trim();
+				 			String exprt = ttt.concat(Actul).trim();
+				 			
+				 			System.out.println(Actul);
+				 			System.out.println("==================");
+				 			System.out.println(ttt);
+				 			System.out.println("----------------");
+				 			System.out.println(exprt);
+				 			System.out.println("-------------------");
+				 			
+				 			}
+				 			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+				 			int count=allOptions.size();
+				 			System.out.println("No.of Autosuggesion "+count);
+				 			System.out.println("List of Autosuggesion");
+				 			for(int i=0;i<count;i++){
+				 				String text = allOptions.get(i).getText();
+				 				System.out.println(text);	
+				 			}*/
+				 			//textbox.sendKeys(Keys.ARROW_DOWN);
+				 			textbox.sendKeys(Keys.ENTER);
+				 			System.out.println("ledger Serched by Name");
+				 			
+				        }
+				        // Code
+				        else  if(driver.findElement(By.xpath("//option[contains(text(),'Code')]")).isSelected()){
+				          	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+				   			//textbox.clear();
+				   		    Thread.sleep(2000);
+				   			textbox.sendKeys(ledgername);
+				   			Thread.sleep(2000);
+				   			//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+				   			List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+				   			int count=allOptions.size();
+				   			System.out.println("No.of Autosuggesion "+count);
+				   			System.out.println("List of Autosuggesion");
+				   			for(int i=0;i<count;i++){
+				   				String text = allOptions.get(i).getText();
+				   				System.out.println(text);	
+				   			}
+				   			//textbox.sendKeys(Keys.ARROW_DOWN);
+				   			textbox.sendKeys(Keys.ENTER);
+				   			System.out.println("ledger Serched by Mobile");
+				   			
+				       }
+				        //Mobile
+				        else  if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[3]")).isSelected()){
+				       	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+							//textbox.clear();
+						    Thread.sleep(2000);
+							textbox.sendKeys(ledgername);
+							Thread.sleep(2000);
+							//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+							List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+							int count=allOptions.size();
+							System.out.println("No.of Autosuggesion "+count);
+							System.out.println("List of Autosuggesion");
+							for(int i=0;i<count;i++){
+								String text = allOptions.get(i).getText();
+								System.out.println(text);	
+							}
+							//textbox.sendKeys(Keys.ARROW_DOWN);
+							textbox.sendKeys(Keys.ENTER);
+							System.out.println("ledger Serched by Mobile");
+							
+				    }
+				      //DL No
+				        else if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[4]")).isSelected()){
+				       	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+							//textbox.clear();
+						    Thread.sleep(2000);
+							textbox.sendKeys(ledgername);
+							Thread.sleep(2000);
+							//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+							List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+							int count=allOptions.size();
+							System.out.println("No.of Autosuggesion "+count);
+							System.out.println("List of Autosuggesion");
+							for(int i=0;i<count;i++){
+								String text = allOptions.get(i).getText();
+								System.out.println(text);	
+							}
+							//textbox.sendKeys(Keys.ARROW_DOWN);
+							textbox.sendKeys(Keys.ENTER);
+							System.out.println("ledger Serched by DL No.");
+							
+
+				}
+				     // Adress
+				        else if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[5]")).isSelected()){
+				       	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+							//textbox.clear();
+						    Thread.sleep(2000);
+							textbox.sendKeys(ledgername);
+							Thread.sleep(2000);
+							//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+							List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+							int count=allOptions.size();
+							System.out.println("No.of Autosuggesion "+count);
+							System.out.println("List of Autosuggesion");
+							for(int i=0;i<count;i++){
+								String text = allOptions.get(i).getText();
+								System.out.println(text);	
+							}
+							//textbox.sendKeys(Keys.ARROW_DOWN);
+							textbox.sendKeys(Keys.ENTER);
+							System.out.println("ledger Serched by Address");
+							
+				        }
+				        // GSTIN
+				        else if(driver.findElement(By.xpath("//*[@id='mrgSearchBox']/option[6]")).isSelected()){
+				       	 WebElement textbox = driver.findElement(By.xpath("//input[@id='SearchBox']"));
+							//textbox.clear();
+						    Thread.sleep(2000);
+							textbox.sendKeys(ledgername);
+							Thread.sleep(2000);
+							//driver.findElement(By.xpath("//*[text()='Vamsi Debit']")).click();
+							List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+							int count=allOptions.size();
+							System.out.println("No.of Autosuggesion "+count);
+							System.out.println("List of Autosuggesion");
+							for(int i=0;i<count;i++){
+								String text = allOptions.get(i).getText();
+								System.out.println(text);	
+							}
+							//textbox.sendKeys(Keys.ARROW_DOWN);
+							textbox.sendKeys(Keys.ENTER);
+							System.out.println("ledger Serched by GSTIN");
+				    }
+					    
 				 }
 				WebElement PId = driver.findElement(By.xpath("//*[contains(@id,'txtptmobile')]"));
 				PId.clear();
@@ -319,16 +463,111 @@ public class Sale_Return_Challan {
 			//orderno.sendKeys(Keys.ENTER);
 			}
 		}
+	@Test(priority=4)
+	public void orderNo(){
+		if(!driver.findElements(By.xpath("//*[contains(@id,'txtentryNo')]")).isEmpty()){
+		WebElement orderno = driver.findElement(By.xpath("//*[contains(@id,'txtentryNo')]"));
+		if(orderno.isEnabled()){
+			//orderno.sendKeys(Keys.ENTER);
+			orderno.sendKeys(Keys.BACK_SPACE);
+			orderno.sendKeys(OrderNo);
+			orderno.sendKeys(Keys.ENTER);
 		
-		
-		/* if(driver.findElement(By.xpath("//*[contains(@id,'txtLedgerName')]")).isDisplayed());{
-			 WebElement led =driver.findElement(By.xpath("//*[contains(@id,'txtLedgerName')]"));
-			    led.sendKeys(Keys.BACK_SPACE);
-			    led.sendKeys(Keys.SPACE);*/
-		 }
+		     }
+			else {
+				
+				orderno.sendKeys(Keys.ENTER);	
+				
+			}}
+		/*if(driver.findElement(By.xpath("//*[contains(@id,'txtptmobile')]")).isDisplayed());{
+			WebElement PId = driver.findElement(By.xpath("//*[contains(@id,'txtptmobile')]"));
+			PId.clear();
+			PId.sendKeys(Keys.ENTER);
+			}*/
+}
+		@Test(priority=5)
+		public void pant(){
+WebElement PId = driver.findElement(By.xpath("//*[contains(@id,'txtptmobile')]"));
+			
+			if(PId.isDisplayed()){
+				PId.sendKeys(PatientId);
+				PId.sendKeys(Keys.ENTER);
+				//PId.sendKeys(Keys.ENTER);
+				System.out.println("patient enterd ");
+				//Thread.sleep(5000);	
+			}
+			else{
+			//PId.clear();
+			
+			
+			PId.sendKeys(Keys.ENTER);
+			System.out.println("patient exist");
+		}
+			}
+		@Test(priority=6)
+		public void DocId() throws InterruptedException{
+			WebElement DId = driver.findElement(By
+					.xpath("//*[contains(@id,'txtdrmobile')]"));
+			if (DId.isDisplayed()) {
+				DId.clear();
+				DId.sendKeys(DoctorId);
+				DId.sendKeys(Keys.ENTER);
+				WebElement Drd = driver.findElement(By
+						.xpath("//*[contains(@id,'txtdrname')]"));
+				Drd.sendKeys(Keys.ENTER);
+
+			} else {
+				// WebElement DId=
+				// driver.findElement(By.xpath("//*[contains(@id,'txtdrmobile')]"));
+				DId.clear();
+				DId.sendKeys(DoctorId);
+				DId.sendKeys(Keys.ENTER);
+				WebElement Drd = driver.findElement(By.xpath("//*[contains(@id,'txtdrname')]"));
+				Drd.sendKeys(Keys.ENTER);
+				Thread.sleep(3000);
+	                /*WebElement billdisc = driver.findElement(By.xpath("//input[@id='tempBillDiscountPercentage']"));
+	                if(billdisc.isEnabled()){
+				//if (driver.findElements(By.xpath("//input[@id='tempBillDiscountPercentage']")) {
+					//WebElement disc = driver.findElement(By.xpath("//input[@id='tempBillDiscountPercentage']"));
+					billdisc.sendKeys(Keys.ENTER);
+				}*/
+
+			}
+			}
+		@Test(priority=6)
+		public void Billdetails() throws InterruptedException{
+			if(!driver.findElements(By.xpath("//div[@class='modal-content']")).isEmpty()){
+			//if(!driver.findElements(By.xpath("//select[@id='returnOfBill']")).isEmpty()){
+				Select det = new Select(driver.findElement(By.xpath("//select[@id='returnOfBill']")));
+				det.selectByVisibleText(RetBill);
+				Thread.sleep(2000);
+				
+				WebElement details = driver.findElement(By.xpath("//select[@id='returnOfBill']"));
+				details.sendKeys(Keys.ENTER);
+				if(driver.findElement(By.xpath("//option[contains(text(),'Single')]")).isSelected()){
+					WebElement billno = driver.findElement(By.xpath("//input[@id='txtbillNo']"));
+					if(billno.isDisplayed()){
+						billno.sendKeys(Keys.ENTER);
+					}
+					else {
+						billno.clear();
+						billno.sendKeys("0001");
+					    billno.sendKeys(Keys.ENTER);
+					}
+					 WebElement ok = driver.findElement(By.xpath("//button[@id='ok']"));
+					 ok.click();
+				}
+				else if(driver.findElement(By.xpath("//option[contains(text(),'Manual')]")).isSelected()){
+					WebElement ok = driver.findElement(By.xpath("//button[@id='ok']"));
+					 ok.click();
+				}
+			}
+		}
+		}
+		 //}
 
 	 //)
-	}
+	//}
 	
 	
 	

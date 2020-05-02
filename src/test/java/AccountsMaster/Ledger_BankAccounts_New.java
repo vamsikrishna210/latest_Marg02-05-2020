@@ -12,11 +12,46 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.margerp.qa.xls_Reader.Xls_Reader;
 
 public class Ledger_BankAccounts_New {
 	WebDriver driver;
 	WebDriverWait Wait;
-	
+	public static Xls_Reader reader = new Xls_Reader(
+			"C:\\Users\\Vamsikrishna\\Desktop\\ddf.xlsx");
+    
+    
+    String user        = 	reader.getCellData("Led_Bank_Mr", "User", 2);
+	String pass 	   = 	reader.getCellData("Led_Bank_Mr", "password", 2);
+	String Companyname = 	reader.getCellData("Led_Bank_Mr", "CompanyName", 2);
+	String LedCode	   = 	reader.getCellData("Led_Bank_Mr", "LedgerCodeReq", 2);
+	String Staion 	   = 	reader.getCellData("Led_Bank_Mr", "Station Required", 2);
+	String DupLed      =  	reader.getCellData("Led_Bank_Mr", "Duplicate allowed", 2);
+	String Altercode   =	reader.getCellData("Led_Bank_Mr", "Alternate Code", 2);
+	String LedName     =	reader.getCellData("Led_Bank_Mr", "Ledger Name", 2);
+	String AccGroup    =  	reader.getCellData("Led_Bank_Mr", "Account Group", 2);
+	String Staion1     =	reader.getCellData("Led_Bank_Mr", "Station", 2);
+	String Milto       =	reader.getCellData("Led_Bank_Mr", "Mail to", 2);
+	String Ad1         =	reader.getCellData("Led_Bank_Mr", "Address1", 2);
+	String Ad2  	   =	reader.getCellData("Led_Bank_Mr", "Address2", 2);
+	String Ad3         =  	reader.getCellData("Led_Bank_Mr", "Address3", 2);
+	String Country	   =	reader.getCellData("Led_Bank_Mr", "Country", 2);
+	String State       =	reader.getCellData("Led_Bank_Mr", "State", 2);
+	String City        =  	reader.getCellData("Led_Bank_Mr", "City", 2);
+	String Pin	       =	reader.getCellData("Led_Bank_Mr", "Pincode", 2);
+	String Phn         =	reader.getCellData("Led_Bank_Mr", "Phone No", 2);
+	String BalMethod   =  	reader.getCellData("Led_Bank_Mr", "Balancing Method", 2);
+	String OpenBal	   =	reader.getCellData("Led_Bank_Mr", "Opening Balance", 2);
+	String DrCr        =	reader.getCellData("Led_Bank_Mr", "Debit/Credit", 2);
+	String ACCNo         =	reader.getCellData("Led_Bank_Mr", "Acc_Led", 2);
+	String Rtgs  	   =	reader.getCellData("Led_Bank_Mr", "RTGS_led", 2);
+	String Ifsc         =  	reader.getCellData("Led_Bank_Mr", "IFSC_Code", 2);
+	String MIR         =  	reader.getCellData("Led_Bank_Mr", "MIR_No", 2);
+	@BeforeSuite
     public void webLaunch() {
     System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vamsikrishna\\Desktop\\chromedriver.exe");
    	driver = new ChromeDriver();
@@ -25,29 +60,35 @@ public class Ledger_BankAccounts_New {
    	driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
    	Wait= new WebDriverWait(driver,20);
 	}
+	@BeforeTest
 	public void login() {
-		driver.findElement(By.xpath("//*[@id='navbarNav']/ul/li[6]/a")).click();
-		driver.findElement(By.xpath("//*[@id='userid']")).sendKeys("admin");
+		driver.findElement(By.xpath("//a[@class='nav-link login']")).click();
+		driver.findElement(By.xpath("//*[@id='userid']")).sendKeys(user);
 		driver.findElement(By.xpath("//*[@id='password']")).sendKeys("1234");
 		driver.findElement(By.xpath("//*[@id='btnSave']")).click();
 
 
 	}
+	@Test(priority=1)
 	public void serchCompany() throws InterruptedException {
-		 WebDriverWait wait = new WebDriverWait(driver, 20);
-			WebElement textbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("SearchBox")));
-			textbox.sendKeys("vamsikrishna");
-			driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-			List<WebElement> allOptions= driver.findElements(By.xpath("//*[@class='textContent']"));
-			int count=allOptions.size();
-			System.out.println("No.of Autosuggesion "+count);
-			System.out.println("List of Autosuggesion");
-			for(int i=0;i<count;i++){
-				String text = allOptions.get(i).getText();
-				System.out.println(text);	
-			}
-			textbox.sendKeys(Keys.ENTER);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		WebElement textbox = wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By
+						.xpath("//input[@id='SearchBox']")));
+		textbox.sendKeys(Companyname);
+		Thread.sleep(5000);
+		List<WebElement> allOptions = driver.findElements(By.xpath("//*[@class='textContent']"));
+		int count=allOptions.size();
+		System.out.println("No.of Autosuggesion "+count);
+		System.out.println("List of Autosuggesion");
+		for(int i=0;i<count;i++){
+			String text = allOptions.get(i).getText();
+			System.out.println(text);	
+		}
+		//textbox.sendKeys(Keys.ARFROW_DOWN);
+		textbox.sendKeys(Keys.ENTER);
 	}
+	@Test(priority=2)
 	public void Master() throws InterruptedException {
 		Actions action = new Actions(driver);
 		WebElement menu = driver.findElement(By.linkText("Master"));
@@ -62,9 +103,11 @@ public class Ledger_BankAccounts_New {
 		Thread.sleep(3000);
 		
 	}
+	@Test(priority=3)
 	public void newleder (){
 		driver.findElement(By.xpath("//button[@title='New']")).click();
 	}
+	@Test(priority=4)
 	public void ctrlrm () throws InterruptedException {
 		Thread.sleep(5000);
 		//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -77,35 +120,36 @@ public class Ledger_BankAccounts_New {
 		
 		Thread.sleep(2000);
 		Select Codereq = new Select(driver.findElement(By.id("code")));
-	    Codereq.selectByIndex(2);
+	    Codereq.selectByVisibleText(LedCode);
 	    Thread.sleep(2000);
 	    
 	    Select Dupname = new Select(driver.findElement(By.xpath("//select[@id='name']")));
-	    Dupname.selectByVisibleText("Yes");
+	    Dupname.selectByVisibleText(DupLed);
 	    Thread.sleep(2000);
 	    driver.findElement(By.xpath("//button[@class='close itemcontrolClose']")).click();
 	}
+	@Test(priority=5)
 	public void newname() throws InterruptedException{
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		if(driver.findElement(By.xpath("//*[@id='code']/option[1]")).isSelected()){
-			driver.findElement(By.id("txtlegername")).sendKeys("HDFC");
+			driver.findElement(By.id("txtlegername")).sendKeys(LedName);
 		}
 		else if (driver.findElement(By.xpath("//*[@id='code']/option[2]")).isSelected()){
-			driver.findElement(By.id("txtalternatecode")).sendKeys("12345");
-			driver.findElement(By.id("txtlegername")).sendKeys("HDFC");
+			driver.findElement(By.id("txtalternatecode")).sendKeys(Altercode);
+			driver.findElement(By.id("txtlegername")).sendKeys(LedName);
 		}
 		else if(driver.findElement(By.xpath("//*[@id='code']/option[3]")).isSelected()){
-			driver.findElement(By.id("txtalternatecode")).sendKeys("12345");
-			driver.findElement(By.id("txtlegername")).sendKeys("HDFC");
+			driver.findElement(By.id("txtalternatecode")).sendKeys(Altercode);
+			driver.findElement(By.id("txtlegername")).sendKeys(LedName);
 		}		
 		
 	}
-		
+	@Test(priority=6)
 	public void Accountgroup() throws InterruptedException{
 		WebElement Accgrp = driver.findElement(By.xpath("//input[@id='drpAccountGroup']"));
 		Accgrp .clear();
 		//textbox1.sendKeys(Keys.SPACE);
-		Accgrp .sendKeys("B");
+		Accgrp .sendKeys(AccGroup);
 		Thread.sleep(5000);
 		List<WebElement> allOptions1= driver.findElements(By.xpath("//*[@class='dropdown-menu show']"));
 		int count1=allOptions1.size();
@@ -121,10 +165,12 @@ public class Ledger_BankAccounts_New {
 		Accgrp.sendKeys(Keys.ARROW_DOWN);
 		Accgrp.sendKeys(Keys.ENTER);
 	}
+	@Test(priority=7)
 	public void station() throws InterruptedException{
+		if(!driver.findElements(By.xpath("//input[@id='ddlstation']")).isEmpty()){
 		WebElement ston = driver.findElement(By.xpath("//input[@id='ddlstation']"));
 		ston.clear();
-		ston.sendKeys("r");
+		ston.sendKeys(Staion1);
 		Thread.sleep(2000);
 		List<WebElement> allOptions2= driver.findElements(By.xpath("//*[@id='ddlCountryLinkID']"));
 		int count2=allOptions2.size();
@@ -135,21 +181,24 @@ public class Ledger_BankAccounts_New {
 			String text2 = allOptions2.get(i).getText();
 			System.out.println(text2);	
 		}
-		    ston.sendKeys(Keys.ARROW_DOWN);			
+		    //ston.sendKeys(Keys.ARROW_DOWN);			
 			ston.sendKeys(Keys.ENTER);	
-	}
+	}}
+	@Test(priority=8)
 	public void mailtoB() throws InterruptedException{
 		WebElement mail = driver.findElement(By.xpath("//input[@id='txtMailTo']"));
 		mail.clear();
 		Thread.sleep(2000);
-		mail.sendKeys("vamsikrishna7569");
+		mail.sendKeys(Milto);
 	}
+	@Test(priority=9)
 	public void addressled() throws InterruptedException{
 		WebElement Address1 = driver.findElement(By.xpath("//input[@id='txtaddress1']"));
-		Address1.sendKeys("gkjghjgk~~!!@@@~!@#$%^&*QWERTYUqwertyu989844894748848144849845198498449865484498498fsdfsdfdfsdfsdffsdfsfsdfsdfsdffsdffsdffsdfdfsdfdfsdfsdfsdfsdfsfsdfffsdfsdfsfsdfsdfsdfsdfsdfsdfsdfsfd"); 
+		Address1.sendKeys(Ad1); 
 		Thread.sleep(3000);
 		
 	}
+	@Test(priority=10)
 	public void country1() throws InterruptedException{
 		/*WebElement cntry = driver.findElement(By.xpath("//*[@id='ddlCountryLinkID']"));
 		 //cntry.clear();
@@ -166,7 +215,7 @@ public class Ledger_BankAccounts_New {
 		driver.findElement(By.xpath("//marg-button[@tabindex='5']//button[@id='btn-Save']")).click();*/
 		WebElement textbox2 = driver.findElement(By.xpath("//*[@id='ddlCountryLinkID']"));
 		textbox2.clear();
-		textbox2.sendKeys("India");
+		textbox2.sendKeys(Country);
 		Thread.sleep(2000);
 		List<WebElement> allOptions2= driver.findElements(By.xpath("//*[@id='ddlCountryLinkID']"));
 		int count2=allOptions2.size();
@@ -178,14 +227,15 @@ public class Ledger_BankAccounts_New {
 			System.out.println(text2);	
 		}
 		   // textbox2.sendKeys(Keys.ARROW_DOWN);
-			textbox2.sendKeys(Keys.ARROW_DOWN);
+			//textbox2.sendKeys(Keys.ARROW_DOWN);
 			textbox2.sendKeys(Keys.ENTER);	
 	}
+	@Test(priority=11)
 	public void state1() throws InterruptedException{
 		WebElement stat1 = driver.findElement(By.id("ddlStateLinkID"));
 		stat1.clear();
 		
-		stat1.sendKeys("New Delhi");
+		stat1.sendKeys(State);
 		Thread.sleep(2000);
 		List<WebElement> allOptions3= driver.findElements(By.id("ddlStateLinkID"));
 		int count3=allOptions3.size();
@@ -200,30 +250,34 @@ public class Ledger_BankAccounts_New {
 		}
 		
 		//driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		stat1.sendKeys(Keys.ARROW_DOWN);
+		//stat1.sendKeys(Keys.ARROW_DOWN);
 		stat1.sendKeys(Keys.ENTER);
 	}
+	@Test(priority=12)
 	public void city1(){
-		driver.findElement(By.xpath("//*[@id='ddlCity']")).sendKeys("Rajahmundry");
-		driver.findElement(By.xpath("//input[@id='txtPostalCode']")).sendKeys("Rajahmundry533101");	
+		driver.findElement(By.xpath("//*[@id='ddlCity']")).sendKeys(City);
+		driver.findElement(By.xpath("//input[@id='txtPostalCode']")).sendKeys(Pin);	
 	}
+	@Test(priority=13)
 	public void openbal(){
-		driver.findElement(By.xpath("//input[@id='txtOpeningBalance']")).sendKeys("500000");
+		driver.findElement(By.xpath("//input[@id='txtOpeningBalance']")).sendKeys(OpenBal);
 		
 		Select OPBL = new Select(driver.findElement(By.id("ddlIsDebitCredit")));
-		OPBL.selectByVisibleText("Cr");
+		OPBL.selectByVisibleText(DrCr);
 	}
+	@Test(priority=14)
 	public void bankdetails(){
-		driver.findElement(By.xpath("//input[@id='txtAccountNo']")).sendKeys("766388846617");
-		driver.findElement(By.xpath("//input[@id='txtRTGSNo']")).sendKeys("766388846617~!@#$%^bkhckbxckjkvb");
-		driver.findElement(By.xpath("//input[@id='txtIFSCCode']")).sendKeys("766388846617~!@#$%^jhfdfhkjuglhqwertyu");
-		driver.findElement(By.xpath("//input[@id='txtMicrNo']")).sendKeys("766388846617qwertyui~~~~~");
-		driver.findElement(By.xpath("//input[@id='txtPhoneNo']")).sendKeys("766388846617qwertyui~~~~~");
+		driver.findElement(By.xpath("//input[@id='txtAccountNo']")).sendKeys(ACCNo);
+		driver.findElement(By.xpath("//input[@id='txtRTGSNo']")).sendKeys(Rtgs);
+		driver.findElement(By.xpath("//input[@id='txtIFSCCode']")).sendKeys(Ifsc);
+		driver.findElement(By.xpath("//input[@id='txtMicrNo']")).sendKeys(MIR);
+		driver.findElement(By.xpath("//input[@id='txtPhoneNo']")).sendKeys(Phn);
 	}
+	@Test(priority=15)
 	public void F10(){
 		driver.findElement(By.xpath("//button[@id='btn-Save']")).click();
 	}
-public static void main(String[] args) throws InterruptedException {
+/*public static void main(String[] args) throws InterruptedException {
 	Ledger_BankAccounts_New lbn = new Ledger_BankAccounts_New();
 	lbn.webLaunch();
 	lbn.login();
@@ -242,5 +296,5 @@ public static void main(String[] args) throws InterruptedException {
 	lbn.openbal();
 	lbn.bankdetails();
 	lbn.F10();
-}
+}*/
 }

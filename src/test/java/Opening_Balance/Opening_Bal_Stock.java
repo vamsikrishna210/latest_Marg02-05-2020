@@ -3,6 +3,7 @@ package Opening_Balance;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.hssf.record.PageBreakRecord.Break;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -75,14 +76,105 @@ public class Opening_Bal_Stock {
 			Seritem.sendKeys("New Pro1");
 			Seritem.sendKeys(Keys.ENTER);
 	 }
+	 
 	 public void Serchbatch() throws InterruptedException{
-		 WebElement serba = driver.findElement(By.xpath("//input[@id='SearchBox']"));
-		serba.clear();
-		 serba.sendKeys("123");
+		 if(!driver.findElements(By.xpath("//input[@id='txt-OpeningQty-0']")).isEmpty()){
+		 WebElement opb = driver.findElement(By.xpath("//input[@id='txt-OpeningQty-0']"));
+		 opb.clear();
+		 opb.sendKeys("123");
 		 Thread.sleep(3000);
-		 serba.sendKeys(Keys.ENTER);
+		 opb.sendKeys(Keys.ENTER);
+		 
 	 }
-	 public void batch () throws InterruptedException{
+		 else{
+			 //batch 
+			 Thread.sleep(3000);
+			 WebElement bath = driver.findElement(By.xpath("//input[@id='txt-batchName-0']"));
+			 System.out.println(bath.isDisplayed());
+			 //if(bath.isDisplayed()){
+			 
+			 if (bath.getSize().equals(null)){
+				 Thread.sleep(3000);
+				 bath.sendKeys(Keys.ENTER);
+			 }
+			 else {
+				 bath.clear();
+				 bath.sendKeys("321");
+				 bath.sendKeys(Keys.ENTER);
+			 }
+			 //unit1
+			 WebElement unit = driver.findElement(By.xpath("//input[@id='txt-OpeningQuantity-0']"));
+			 unit.sendKeys(Keys.BACK_SPACE);
+			 unit.sendKeys("50");
+			 unit.sendKeys(Keys.ENTER);
+			 //MRP
+			 WebElement mrp = driver.findElement(By.xpath("//*[contains(@id,'txt-mrp')]"));
+			 mrp.sendKeys(Keys.BACK_SPACE);
+			 mrp.sendKeys("200");
+			 mrp.sendKeys(Keys.ENTER);
+			 //Prate
+			 WebElement prate = driver.findElement(By.xpath("//*[contains(@id,'txt-pRate')]"));
+			 prate.sendKeys(Keys.BACK_SPACE);
+			 prate.sendKeys("100");
+			 prate.sendKeys(Keys.ENTER);
+			 //Cost
+			 WebElement Perco = driver.findElement(By.xpath("//*[contains(@id,'txt-costPerPcs')]"));
+			 Perco.sendKeys(Keys.BACK_SPACE);
+			 Perco.sendKeys("10");
+			 Perco.sendKeys(Keys.ENTER);
+			 //RateA
+			 WebElement RateA = driver.findElement(By.xpath("//*[contains(@id,'txt-rateA')]"));
+			 RateA.sendKeys(Keys.BACK_SPACE);
+			 RateA.sendKeys("150");
+			 RateA.sendKeys(Keys.ENTER);
+			 // Remaing Rates
+			 WebElement rateB = driver.findElement(By.xpath("//*[contains(@id,'txt-rateB')]"));
+			 rateB.sendKeys(Keys.BACK_SPACE);
+			 rateB.sendKeys("149");
+			 rateB.sendKeys(Keys.ENTER);
+			 
+			 WebElement rateC = driver.findElement(By.xpath("//*[contains(@id,'txt-rateC')]"));
+			 rateC.sendKeys(Keys.BACK_SPACE);
+			 rateC.sendKeys("149");
+			 rateC.sendKeys(Keys.ENTER);
+			 
+			 WebElement rateD = driver.findElement(By.xpath("//*[contains(@id,'txt-rateD')]"));
+			 rateD.sendKeys(Keys.BACK_SPACE);
+			 rateD.sendKeys("149");
+			 rateD.sendKeys(Keys.ENTER);
+			 
+			 WebElement rateE = driver.findElement(By.xpath("//*[contains(@id,'txt-rateE')]"));
+			 rateE.sendKeys(Keys.BACK_SPACE);
+			 rateE.sendKeys("149");
+			 rateE.sendKeys(Keys.ENTER);
+			 
+			 WebElement rateF = driver.findElement(By.xpath("//*[contains(@id,'txt-rateF')]"));
+			 rateF.sendKeys(Keys.BACK_SPACE);
+			 rateF.sendKeys("149");
+			 rateF.sendKeys(Keys.ENTER);
+			 
+			 WebElement rateG = driver.findElement(By.xpath("//*[contains(@id,'txt-rateG')]"));
+			 rateG.sendKeys(Keys.BACK_SPACE);
+			 rateG.sendKeys("149");
+			 rateG.sendKeys(Keys.ENTER);
+			 
+			 WebElement rateH = driver.findElement(By.xpath("//*[contains(@id,'txt-rateH')]"));
+			 rateH.sendKeys(Keys.BACK_SPACE);
+			 rateH.sendKeys("149");
+			 rateH.sendKeys(Keys.ENTER); 
+
+			 //Dates
+			 WebElement MfGd= driver.findElement(By.xpath("//*[contains(@id,'txt-mfgDate')]"));
+			 MfGd.sendKeys("09-2019");
+			 MfGd.sendKeys(Keys.ENTER);
+			
+			 WebElement Exp = driver.findElement(By.xpath("//input[@id='txt-expiryDate-0']"));
+		     Exp.sendKeys(Keys.ENTER); 
+			 
+		 }
+		 
+	 }
+	/* public void batch () throws InterruptedException{
 		 Thread.sleep(3000);
 		 WebElement bath = driver.findElement(By.xpath("//input[@id='txt-batchName-0']"));
 		 System.out.println(bath.isDisplayed());
@@ -195,5 +287,5 @@ public class Opening_Bal_Stock {
 		 ops.RemainingRates();
 		 ops.M_EDate();
 		 
-	}
+	}*/
 }
